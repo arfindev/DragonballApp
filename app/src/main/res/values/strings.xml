@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DragonballApp</string>
+    <string name="OnBoardFirst">First OnBoarding Image</string>
 </resources>

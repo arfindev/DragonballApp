@@ -5,4 +5,5 @@ object Constant {
     const val DRAGONBALL_HERO_TABLE = "dragonball_hero_table"
     const val HERO_REMOTE_KEY_TABLE = "hero_remote_key_table"
     const val DRAGON_BALL_DATABASE = "dragonball_database"
+    const val ONBOARDING_PAGER_COUNT = 2
 }

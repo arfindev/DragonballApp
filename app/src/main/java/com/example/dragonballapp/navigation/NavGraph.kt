@@ -7,12 +7,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.dragonballapp.presentations.screens.splash.SplashScreen
+import com.example.dragonballapp.presentations.screens.welcome.WelcomeScreen
 import com.example.dragonballapp.util.Constant.DETAIL_SCREEN_KEY
 
 @Composable
 fun SetupNavGraph(navController: NavHostController) {
 
-    NavHost(navController = navController, startDestination = Screens.Splash.route) {
+    NavHost(navController = navController, startDestination = Screens.Welcome.route) {
         composable(route = Screens.Home.route) {
 
         }
@@ -33,6 +34,7 @@ fun SetupNavGraph(navController: NavHostController) {
                 type = NavType.IntType
             })
         ) {
+            WelcomeScreen(navController = navController)
 
         }
 

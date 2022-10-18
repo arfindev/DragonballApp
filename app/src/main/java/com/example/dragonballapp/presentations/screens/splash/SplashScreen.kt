@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.dragonballapp.R
-import com.example.dragonballapp.ui.theme.DarkRed
+import com.example.dragonballapp.ui.theme.DarkYellow
 import com.example.dragonballapp.ui.theme.Yellow
 
 @Composable
@@ -56,7 +56,7 @@ fun Splash(scale: Float) {
     } else {
         Box(
             modifier = Modifier
-                .background(Brush.verticalGradient(listOf(DarkRed, Yellow)))
+                .background(Brush.verticalGradient(listOf(DarkYellow, Yellow)))
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
