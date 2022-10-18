@@ -16,9 +16,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.dragonballapp.R
 import com.example.dragonballapp.domain.model.OnBoardingPage
+import com.example.dragonballapp.navigation.Screens
 import com.example.dragonballapp.ui.EXTRA_LARGE_PADDING
 import com.example.dragonballapp.ui.PAGING_INDICATOR_SPACING
 import com.example.dragonballapp.ui.PAGING_INDICATOR_WIDTH
@@ -30,6 +32,7 @@ import com.google.accompanist.pager.*
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun WelcomeScreen(
+    welcomeScreenViewModel: WelcomeScreenViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
     val pages = listOf(
@@ -61,6 +64,10 @@ fun WelcomeScreen(
             spacing = PAGING_INDICATOR_SPACING
         )
         FinishButton(modifier = Modifier.weight(3f), pagerState = pagerState) {
+            navController.popBackStack()
+            navController.navigate(Screens.Home.route)
+            welcomeScreenViewModel.saveOnBoardingState(completed = true)
+
 
         }
 
