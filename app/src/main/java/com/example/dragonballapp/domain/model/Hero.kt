@@ -3,7 +3,9 @@ package com.example.dragonballapp.domain.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.dragonballapp.util.Constant.DRAGONBALL_HERO_TABLE
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity(tableName = DRAGONBALL_HERO_TABLE)
 data class Hero(
     @PrimaryKey(autoGenerate = false)

@@ -1,11 +1,11 @@
 package com.example.dragonballapp.di
 
 import android.content.Context
-import androidx.annotation.RequiresPermission.Read
-import com.example.dragonballapp.data.pref.DataStoreOperationImpl
-import com.example.dragonballapp.data.pref.Repository
+import com.example.dragonballapp.data.repository.DataStoreOperationImpl
+import com.example.dragonballapp.data.repository.Repository
 import com.example.dragonballapp.domain.repository.DataStoreOperation
 import com.example.dragonballapp.domain.use_cases.UseCases
+import com.example.dragonballapp.domain.use_cases.allheroes_usecase.GetAllHeroesUseCase
 import com.example.dragonballapp.domain.use_cases.readonboarding_usecase.ReadOnBoardingUseCase
 import com.example.dragonballapp.domain.use_cases.saveonboarding_usecase.SaveOnBoardingUseCase
 import dagger.Module
@@ -30,7 +30,8 @@ object RepositoryModule {
     fun provideUseCases(repository: Repository): UseCases {
         return UseCases(
             saveOnBoardingUseCase = SaveOnBoardingUseCase(repository),
-            readOnBoardingUseCase = ReadOnBoardingUseCase(repository)
+            readOnBoardingUseCase = ReadOnBoardingUseCase(repository),
+            getAllHeroesUseCase = GetAllHeroesUseCase(repository = repository)
         )
     }
 

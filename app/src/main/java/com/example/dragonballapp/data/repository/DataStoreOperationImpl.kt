@@ -1,4 +1,4 @@
-package com.example.dragonballapp.data.pref
+package com.example.dragonballapp.data.repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -44,4 +44,5 @@ class DataStoreOperationImpl(context: Context) : DataStoreOperation {
             onoBoardingState
         }
     }
+
 }

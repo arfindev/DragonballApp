@@ -19,12 +19,14 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context
-    ) =
-        Room.databaseBuilder(
+    ): DragonballDatabase {
+        return Room.databaseBuilder(
             context,
             DragonballDatabase::class.java,
             DRAGON_BALL_DATABASE
         ).build()
+
+    }
 
 
 }

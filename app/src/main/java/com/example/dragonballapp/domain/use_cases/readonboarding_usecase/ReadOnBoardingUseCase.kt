@@ -1,6 +1,6 @@
 package com.example.dragonballapp.domain.use_cases.readonboarding_usecase
 
-import com.example.dragonballapp.data.pref.Repository
+import com.example.dragonballapp.data.repository.Repository
 import kotlinx.coroutines.flow.Flow
 
 class ReadOnBoardingUseCase(
