@@ -44,7 +44,6 @@ class HeroRemoteMediator @Inject constructor(
                 }
             }
 
-
             val response = dragonballApi.getAllHeroes(page = page)
             if (response.heroes.isNotEmpty()) {
                 dragonballDatabase.withTransaction {
@@ -83,7 +82,7 @@ class HeroRemoteMediator @Inject constructor(
     }
 
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Hero>): HeroRemoteKeys? {
-        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { hero ->
+        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { hero ->
             heroRemoteKeysDao.getRemoteKey(id = hero.id)
 
         }

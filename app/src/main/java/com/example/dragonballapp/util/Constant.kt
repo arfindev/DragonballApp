@@ -8,8 +8,9 @@ object Constant {
     const val ONBOARDING_PAGER_COUNT = 2
     const val PREFERENCES_NAME = "dragonball_preferences"
     const val PREFERENCES_KEY = "on_boarding_completed"
-    const val BASE_URL = "http://10.0.2.2:8056"
+    const val BASE_URL = "http://192.168.0.9:8056"
 
-    const val ITEMS_PER_PAGE = 3
+
+    const val ITEMS_PER_PAGE = 1
 
 }

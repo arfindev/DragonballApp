@@ -11,7 +11,7 @@ import com.example.dragonballapp.domain.model.HeroRemoteKeys
 interface HeroRemotekeyDao {
 
     @Query("SELECT * FROM hero_remote_keys_table WHERE id = :id")
-    suspend fun getRemoteKey(id: Int): HeroRemoteKeys
+    suspend fun getRemoteKey(id: Int): HeroRemoteKeys?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addAllRemoteKey(heroRemoteKeys: List<HeroRemoteKeys>)

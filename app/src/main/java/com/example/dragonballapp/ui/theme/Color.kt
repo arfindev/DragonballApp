@@ -14,6 +14,11 @@ val DarkYellow = Color(0xffff9d00)
 val LightBlack = Color(0x36000000)
 val Yellow = Color(0xffff8b01)
 
+val LightGray = Color(0xFFD8D8D8)
+val DarkGray = Color(0xFF2A2A2A)
+val StarColor = Color(0xFFFFC94D)
+
+
 val Colors.titleColor
     @Composable
     get() = if (isLight) DarkGray else LightGray

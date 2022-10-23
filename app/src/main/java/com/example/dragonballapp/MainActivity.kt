@@ -5,10 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.annotation.ExperimentalCoilApi
 import com.example.dragonballapp.navigation.SetupNavGraph
 import com.example.dragonballapp.ui.theme.DragonballAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalCoilApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
