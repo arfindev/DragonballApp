@@ -1,5 +1,6 @@
 package com.example.dragonballapp.data.paging_source
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -9,6 +10,8 @@ import com.example.dragonballapp.data.local.DragonballDatabase
 import com.example.dragonballapp.data.remote.DragonballApi
 import com.example.dragonballapp.domain.model.Hero
 import com.example.dragonballapp.domain.model.HeroRemoteKeys
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
@@ -18,6 +21,25 @@ class HeroRemoteMediator @Inject constructor(
 ) : RemoteMediator<Int, Hero>() {
     val heroDao = dragonballDatabase.heroDao()
     val heroRemoteKeysDao = dragonballDatabase.heroRemoteKeydao()
+
+    override suspend fun initialize(): InitializeAction {
+        val currentTime = System.currentTimeMillis()
+        val lastUpdated = heroRemoteKeysDao.getRemoteKey(id = 1)?.lastUpdated ?: 0L
+        val cacheTimeOut = 5
+        Log.d("RemoteMediator", "Current TIme: ${parseMillis(currentTime)} ")
+        Log.d("RemoteMediator", "Last Updated Time: ${parseMillis(lastUpdated)} ")
+
+        val diffInMinutes = (currentTime - lastUpdated) / 1000 / 60
+        return if (diffInMinutes.toInt() <= cacheTimeOut) {
+            Log.d("RemoteMediator", "Up to date  ")
+            InitializeAction.SKIP_INITIAL_REFRESH
+        } else {
+            Log.d("RemoteMediator", "Refresh  ")
+
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        }
+    }
+
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Hero>): MediatorResult {
         return try {
@@ -57,7 +79,8 @@ class HeroRemoteMediator @Inject constructor(
                         HeroRemoteKeys(
                             id = hero.id,
                             prevPage = prevPage,
-                            nextPage = nextPage
+                            nextPage = nextPage,
+                            lastUpdated = response.lastUpdated
                         )
                     }
                     heroRemoteKeysDao.addAllRemoteKey(heroRemoteKeys = keys)
@@ -99,4 +122,11 @@ class HeroRemoteMediator @Inject constructor(
         }
 
     }
+
+    private fun parseMillis(millis: Long): String {
+        val date = Date(millis)
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.ROOT)
+        return format.format(date)
+    }
+
 }

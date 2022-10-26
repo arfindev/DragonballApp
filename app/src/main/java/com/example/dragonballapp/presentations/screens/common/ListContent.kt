@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
@@ -30,6 +31,7 @@ import com.example.dragonballapp.R
 import com.example.dragonballapp.domain.model.Hero
 import com.example.dragonballapp.navigation.Screens
 import com.example.dragonballapp.presentations.components.RatingWidget
+import com.example.dragonballapp.presentations.components.ShimmerEffect
 import com.example.dragonballapp.ui.HERO_ITEM_HEIGHT
 import com.example.dragonballapp.ui.LARGE_PADDING
 import com.example.dragonballapp.ui.MEDIUM_PADDING
@@ -43,23 +45,53 @@ fun ListContent(
     heroes: LazyPagingItems<Hero>,
     navController: NavHostController
 ) {
-    Log.d("list-content", heroes.loadState.toString())
-    LazyColumn(
-        contentPadding = PaddingValues(all = SMALL_PADDING),
-        verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
-    ) {
-        items(
-            items = heroes,
-            key = { hero ->
-                hero.id
-            }
-        ) { hero ->
-            hero?.let {
-                HeroItem(hero = it, navController = navController)
+
+    val result = handlePagingResult(heroes = heroes)
+
+    if (result) {
+        LazyColumn(
+            contentPadding = PaddingValues(all = SMALL_PADDING),
+            verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
+        ) {
+            items(
+                items = heroes,
+                key = { hero -> hero.id }) { hero ->
+                hero?.let {
+                    HeroItem(hero = it, navController = navController)
+                }
             }
         }
+
     }
 
+    Log.d("list-content", heroes.loadState.toString())
+
+}
+
+
+@Composable
+fun handlePagingResult(
+    heroes: LazyPagingItems<Hero>
+): Boolean {
+    heroes.apply {
+        val error = when {
+            loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+            loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+            loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+            else -> null
+        }
+        return when {
+            loadState.refresh is LoadState.Loading -> {
+                ShimmerEffect()
+                false
+            }
+            error != null -> {
+                EmptyScreen(error = error)
+                false
+            }
+            else -> true
+        }
+    }
 
 }
 
@@ -150,7 +182,8 @@ fun HeroItemPreview() {
             id = 1,
             name = "Sasuke",
             image = "",
-            about = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+            about = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
             rating = 0.0,
             power = 100,
             month = "",

@@ -26,7 +26,7 @@ import com.example.dragonballapp.ui.theme.Yellow
 @Composable
 fun SplashScreen(
     splashScreenViewModel: SplashScreenViewModel = hiltViewModel(),
-    navHostController: NavHostController,
+    navController: NavHostController,
 ) {
 
     val onBoardingCompleted by splashScreenViewModel.onBoardingCompleted.collectAsState()
@@ -42,11 +42,11 @@ fun SplashScreen(
                 delayMillis = 200
             )
         )
-        navHostController.popBackStack()
+        navController.popBackStack()
         if (onBoardingCompleted) {
-            navHostController.navigate(Screens.Home.route)
+            navController.navigate(Screens.Home.route)
         } else {
-            navHostController.navigate(Screens.Welcome.route)
+           navController.navigate(Screens.Welcome.route)
         }
     }
     Splash(scale = degrees.value)
