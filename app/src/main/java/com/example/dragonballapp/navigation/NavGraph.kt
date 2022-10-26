@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
+import com.example.dragonballapp.presentations.Search.SearchScreen
 import com.example.dragonballapp.presentations.screens.home.HomeScreen
 import com.example.dragonballapp.presentations.screens.splash.SplashScreen
 import com.example.dragonballapp.presentations.screens.welcome.WelcomeScreen
@@ -28,6 +29,7 @@ fun SetupNavGraph(
 
         }
         composable(route = Screens.Search.route) {
+            SearchScreen(navController = navController)
 
         }
         composable(route = Screens.Splash.route) {

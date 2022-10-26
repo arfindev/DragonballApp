@@ -19,13 +19,18 @@ import com.example.dragonballapp.ui.theme.LightGray
 
 
 @Composable
-fun EmptyScreen(error: LoadState.Error) {
+fun EmptyScreen(error: LoadState.Error? = null) {
 
-    val message by remember {
-        mutableStateOf(parseErrorMessage(error.toString()))
+    var message by remember {
+        mutableStateOf("Find Your Favourite Hero")
     }
-    val icon by remember {
-        mutableStateOf(R.drawable.ic_error)
+    var icon by remember {
+        mutableStateOf(R.drawable.ic_search)
+    }
+
+    if (error != null) {
+        message = parseErrorMessage(message = error.toString())
+        icon = R.drawable.ic_error
     }
 
     Column(

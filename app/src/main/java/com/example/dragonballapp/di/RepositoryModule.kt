@@ -8,6 +8,7 @@ import com.example.dragonballapp.domain.use_cases.UseCases
 import com.example.dragonballapp.domain.use_cases.allheroes_usecase.GetAllHeroesUseCase
 import com.example.dragonballapp.domain.use_cases.readonboarding_usecase.ReadOnBoardingUseCase
 import com.example.dragonballapp.domain.use_cases.saveonboarding_usecase.SaveOnBoardingUseCase
+import com.example.dragonballapp.domain.use_cases.search_heroes_usecase.SearchHeroesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +32,8 @@ object RepositoryModule {
         return UseCases(
             saveOnBoardingUseCase = SaveOnBoardingUseCase(repository),
             readOnBoardingUseCase = ReadOnBoardingUseCase(repository),
-            getAllHeroesUseCase = GetAllHeroesUseCase(repository = repository)
+            getAllHeroesUseCase = GetAllHeroesUseCase(repository = repository),
+            searchHeroesUseCase = SearchHeroesUseCase(repository)
         )
     }
 
