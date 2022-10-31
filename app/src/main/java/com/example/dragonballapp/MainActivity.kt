@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.example.dragonballapp.navigation.SetupNavGraph
 import com.example.dragonballapp.ui.theme.DragonballAppTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalCoilApi
@@ -16,6 +17,7 @@ class MainActivity : ComponentActivity() {
 
 
     private lateinit var navController: NavHostController
+    @OptIn(ExperimentalPagerApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)

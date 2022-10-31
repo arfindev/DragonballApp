@@ -1,5 +1,6 @@
 package com.example.dragonballapp.presentations.Details.components
 
+import android.graphics.Color.parseColor
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -8,8 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,8 +27,19 @@ import com.example.dragonballapp.util.Constant.BASE_URL
 @Composable
 fun DetailsContent(
     navController: NavHostController,
-    selectedHero: Hero?
+    selectedHero: Hero?,
+    colors: Map<String, String>
 ) {
+
+    var vibrant by remember { mutableStateOf("#000000") }
+    var darkVibrant by remember { mutableStateOf("#000000") }
+    var onDarkVibrant by remember { mutableStateOf("#ffffff") }
+
+    LaunchedEffect(key1 = selectedHero) {
+        vibrant = colors["vibrant"]!!
+        darkVibrant = colors["darkVibrant"]!!
+        onDarkVibrant = colors["onDarkVibrant"]!!
+    }
 
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
@@ -50,15 +61,25 @@ fun DetailsContent(
         sheetPeekHeight = MIN_SHEET_HEIGHT,
         sheetContent = {
             selectedHero?.let {
-                BottomSheetContent(selectedHero = it)
+                BottomSheetContent(
+                    selectedHero = it,
+                    infoBoxIconColor = Color(parseColor(vibrant)),
+                    sheetBackgroundColor = Color(parseColor(darkVibrant)),
+                    contentColor = Color(parseColor(onDarkVibrant))
+                )
             }
         }
     ) {
         Box() {
             selectedHero?.let {
-                BackgroundContent(heroImage = it.image, onClosedClicked = {
-                    navController.popBackStack()
-                }, imageFraction = currentSheetFraction)
+                BackgroundContent(
+                    heroImage = it.image,
+                    backgroundColor = Color(parseColor(darkVibrant)),
+                    onClosedClicked = {
+                        navController.popBackStack()
+                    },
+                    imageFraction = currentSheetFraction
+                )
             }
 
         }
@@ -90,7 +111,7 @@ fun BackgroundContent(
         Image(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(fraction = imageFraction + 0.4f)
+                .fillMaxHeight(fraction = imageFraction + 0.5f)
                 .align(
                     Alignment.TopStart
                 ),
