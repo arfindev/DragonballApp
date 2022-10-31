@@ -9,7 +9,8 @@ import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val dataStoreOperation: DataStoreOperation
+    private val dataStoreOperation: DataStoreOperation,
+    private val localDataSource: LocalDataSource
 ) {
 
 
@@ -19,6 +20,10 @@ class Repository @Inject constructor(
 
     fun searchHeroes(query: String): Flow<PagingData<Hero>> {
         return remoteDataSource.searchHeroes(query)
+    }
+
+    suspend fun getSelectedHeroes(heroId: Int): Hero {
+        return localDataSource.getSelectedHero(heroId = heroId)
     }
 
 

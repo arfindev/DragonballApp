@@ -1,5 +1,6 @@
 package com.example.dragonballapp.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -7,12 +8,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
+import com.example.dragonballapp.presentations.Details.DetailsScreen
 import com.example.dragonballapp.presentations.Search.SearchScreen
 import com.example.dragonballapp.presentations.screens.home.HomeScreen
 import com.example.dragonballapp.presentations.screens.splash.SplashScreen
 import com.example.dragonballapp.presentations.screens.welcome.WelcomeScreen
 import com.example.dragonballapp.util.Constant.DETAIL_SCREEN_KEY
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@OptIn(ExperimentalMaterialApi::class)
+@ExperimentalPagerApi
 @ExperimentalCoilApi
 @Composable
 fun SetupNavGraph(
@@ -42,6 +47,7 @@ fun SetupNavGraph(
                 type = NavType.IntType
             })
         ) {
+            DetailsScreen(navController = navController)
 
 
         }

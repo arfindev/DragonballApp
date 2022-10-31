@@ -3,6 +3,8 @@ package com.example.dragonballapp.di
 import android.content.Context
 import androidx.room.Room
 import com.example.dragonballapp.data.local.DragonballDatabase
+import com.example.dragonballapp.data.repository.LocalDataSource
+import com.example.dragonballapp.data.repository.LocalDataSourceImpl
 import com.example.dragonballapp.util.Constant.DRAGON_BALL_DATABASE
 import dagger.Module
 import dagger.Provides
@@ -26,6 +28,12 @@ object DatabaseModule {
             DRAGON_BALL_DATABASE
         ).build()
 
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocalDataSource(dragonballDatabase: DragonballDatabase): LocalDataSource {
+        return LocalDataSourceImpl(dragonballDatabase = dragonballDatabase)
     }
 
 

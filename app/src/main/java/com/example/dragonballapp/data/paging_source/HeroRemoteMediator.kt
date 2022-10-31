@@ -19,13 +19,13 @@ class HeroRemoteMediator @Inject constructor(
     private val dragonballApi: DragonballApi,
     private val dragonballDatabase: DragonballDatabase
 ) : RemoteMediator<Int, Hero>() {
-    val heroDao = dragonballDatabase.heroDao()
-    val heroRemoteKeysDao = dragonballDatabase.heroRemoteKeydao()
+    private val heroDao = dragonballDatabase.heroDao()
+    private val heroRemoteKeysDao = dragonballDatabase.heroRemoteKeydao()
 
     override suspend fun initialize(): InitializeAction {
         val currentTime = System.currentTimeMillis()
-        val lastUpdated = heroRemoteKeysDao.getRemoteKey(id = 1)?.lastUpdated ?: 0L
-        val cacheTimeOut = 5
+        val lastUpdated = heroRemoteKeysDao.getRemoteKey(heroId = 1)?.lastUpdated ?: 0L
+        val cacheTimeOut = 1440
         Log.d("RemoteMediator", "Current TIme: ${parseMillis(currentTime)} ")
         Log.d("RemoteMediator", "Last Updated Time: ${parseMillis(lastUpdated)} ")
 
@@ -88,39 +88,32 @@ class HeroRemoteMediator @Inject constructor(
                 }
             }
             MediatorResult.Success(endOfPaginationReached = response.nextPage == null)
-
-
         } catch (e: Exception) {
             return MediatorResult.Error(e)
         }
-
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Hero>): HeroRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { hero ->
-            heroRemoteKeysDao.getRemoteKey(id = hero.id)
+            heroRemoteKeysDao.getRemoteKey(heroId = hero.id)
 
         }
-
     }
 
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Hero>): HeroRemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { hero ->
-            heroRemoteKeysDao.getRemoteKey(id = hero.id)
+            heroRemoteKeysDao.getRemoteKey(heroId = hero.id)
 
         }
-
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Hero>): HeroRemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { id ->
-                heroRemoteKeysDao.getRemoteKey(id = id)
+                heroRemoteKeysDao.getRemoteKey(heroId = id)
 
             }
-
         }
-
     }
 
     private fun parseMillis(millis: Long): String {
@@ -128,5 +121,4 @@ class HeroRemoteMediator @Inject constructor(
         val format = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.ROOT)
         return format.format(date)
     }
-
 }

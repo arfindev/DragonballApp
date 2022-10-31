@@ -9,6 +9,7 @@ import com.example.dragonballapp.domain.use_cases.allheroes_usecase.GetAllHeroes
 import com.example.dragonballapp.domain.use_cases.readonboarding_usecase.ReadOnBoardingUseCase
 import com.example.dragonballapp.domain.use_cases.saveonboarding_usecase.SaveOnBoardingUseCase
 import com.example.dragonballapp.domain.use_cases.search_heroes_usecase.SearchHeroesUseCase
+import com.example.dragonballapp.domain.use_cases.selectedhero_usecase.SelectedHeroUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,7 +34,8 @@ object RepositoryModule {
             saveOnBoardingUseCase = SaveOnBoardingUseCase(repository),
             readOnBoardingUseCase = ReadOnBoardingUseCase(repository),
             getAllHeroesUseCase = GetAllHeroesUseCase(repository = repository),
-            searchHeroesUseCase = SearchHeroesUseCase(repository)
+            searchHeroesUseCase = SearchHeroesUseCase(repository),
+            selectedHeroUseCase = SelectedHeroUseCase(repository = repository)
         )
     }
 
